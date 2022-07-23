@@ -12,6 +12,7 @@ RUN git clone https://github.com/freeday-app/freeday-web.git web
 # install web client dependencies
 WORKDIR /web
 RUN npm install
+
 # build web client
 RUN npm run build
 
@@ -25,7 +26,9 @@ WORKDIR /app
 # copy api server files
 COPY --from=builder /api .
 # install prod dependencies
-RUN npm install --only=prod
+
+ARG NODE_ENV=production
+RUN npm install
 
 # create web client directory
 RUN mkdir web
